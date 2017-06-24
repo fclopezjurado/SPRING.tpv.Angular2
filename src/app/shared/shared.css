@@ -1,0 +1,28 @@
+/*
+ * Shared CSS
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-header {
+    background-color: #433e43;
+    color: white;
+}
+
+.secondary-header {
+    background-color: #e2dde2;
+    color: black;
+}
+
+.secondary-header span {
+    text-align: center;
+    flex: 1 1 auto;
+}
+
+.border {
+    border: 1px solid black;
+}

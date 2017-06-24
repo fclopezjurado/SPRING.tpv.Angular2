@@ -1,0 +1,26 @@
+/*
+ * CSS for welcome components
+ */
+
+@import url('../shared/shared.css');
+
+form {
+    margin-top: 3%;
+}
+
+.form-element-container {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.error {
+    font-style: italic;
+}
+
+form button {
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    margin-top: 5%;
+}

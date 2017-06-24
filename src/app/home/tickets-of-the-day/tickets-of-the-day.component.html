@@ -1,0 +1,51 @@
+<h1 id="page-title">Tickets of the day</h1>
+<md-card >
+	<md-card-content *ngIf="!loading; else spinner">
+		<ngx-datatable
+			fxHide.xs
+			class="material"
+			[messages]="{emptyMessage: 'No tickets have been done today', totalMessage: ' tickets'}"
+			[rowHeight]="'auto'"
+			[columnMode]="'force'"
+			[rows]="ticketsOfTheDay"
+			[reorderable]="false"
+			[columns]="columns"
+			[footerHeight]="50"
+			[limit]="10">
+			<ngx-datatable-column name="Reference">
+				<ng-template let-value="value" ngx-datatable-cell-template>
+					<a routerLink="/order-tracking/{{value}}">
+						{{value}}
+					</a>
+				</ng-template>
+			</ngx-datatable-column>
+			<ngx-datatable-column name="Total">
+				<ng-template let-value="value" ngx-datatable-cell-template>
+					<currency [value]="value"></currency>
+				</ng-template>
+			</ngx-datatable-column>
+		</ngx-datatable>
+		<div fxHide fxShow.xs>
+			<md-list *ngFor="let ticket of ticketsOfTheDay">
+			    <md-list-item>
+			    	<md-icon md-list-icon>shopping_basket</md-icon>
+			    	<h4 md-line>
+			      		<a routerLink="/order-tracking/{{ticket.reference}}">
+			       			{{ticket.reference}}
+			        	</a>
+			      	</h4>
+			      	<p md-line>
+			        	<currency [value]="ticket.total"></currency>
+			      	</p>
+			    </md-list-item>
+			    <md-divider></md-divider>
+			</md-list>
+			<div *ngIf="ticketsOfTheDay && ticketsOfTheDay.length == 0">
+				No tickets have been done today
+			</div>
+		</div>
+	</md-card-content>
+	<ng-template #spinner>
+		<md-spinner></md-spinner>
+	</ng-template>
+</md-card>

@@ -1,0 +1,16 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+$tpv-app-primary: mat-palette($mat-indigo);
+$tpv-app-accent: mat-palette($mat-amber, A200, A100, A400);
+
+$tpv-app-warn: mat-palette($mat-red);
+
+$tpv-app-theme: mat-light-theme($tpv-app-primary, $tpv-app-accent, $tpv-app-warn);
+
+@include angular-material-theme($tpv-app-theme);

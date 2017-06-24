@@ -1,0 +1,118 @@
+<div fxLayout="column" fxLayoutGap="1em">
+	<md-card>
+		<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+			<div fxFlex="15" fxHide.xs>
+			  	<md-input-container>
+			  		<input placeholder="Money to collect (€)" mdInput disabled [value]="totalPrice">
+			  	</md-input-container>
+			</div>
+		    <div fxFlex fxHide fxShow.xs>
+		    	Total: <currency [value]="totalPrice"></currency>
+		    </div>
+		  	<md-input-container fxFlex="40">
+		  		<input mdInput placeholder="Counted money (€)" type="number" [(ngModel)]="moneyCharged" step="0.01" min="0.00" (blur)="formatCountedMoneyInput()">
+		  	</md-input-container>
+		  	<button fxFlex="20" md-raised-button color="primary" (click)="finishPayment()">OK</button>
+		</div>
+	</md-card>
+	<md-card fxHide.xs fxHide.sm> 
+		<div fxLayout="row" fxLayoutAlign="space-between center">
+			<div fxFlex="20" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(5)" [disabled]="moneyQuantitiesCharged['5']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/5euro.png" (click)="addQuantity(5)"/>
+			</div>
+			<div fxFlex="20" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(10)" [disabled]="moneyQuantitiesCharged['10']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/10euro.png" (click)="addQuantity(10)"/>
+			</div>
+			<div fxFlex="20" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(20)" [disabled]="moneyQuantitiesCharged['20']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/20euro.png" (click)="addQuantity(20)"/>
+			</div>
+			<div fxFlex="20" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(50)" [disabled]="moneyQuantitiesCharged['50']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/50euro.png" (click)="addQuantity(50)"/>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="space-around center">
+			<div fxFlex="20" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(100)" [disabled]="moneyQuantitiesCharged['100']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/100euro.png" (click)="addQuantity(100)"/>
+			</div>
+			<div fxFlex="20" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(200)" [disabled]="moneyQuantitiesCharged['200']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/200euro.png" (click)="addQuantity(200)"/>
+			</div>
+			<div fxFlex="20" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(500)" [disabled]="moneyQuantitiesCharged['500']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/500euro.png" (click)="addQuantity(500)"/>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="space-around center">
+			<div fxFlex="10" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(2)" [disabled]="moneyQuantitiesCharged['2']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/2euro.png" (click)="addQuantity(2)"/>
+			</div>
+			<div fxFlex="10" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(1)" [disabled]="moneyQuantitiesCharged['1']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/1euro.png" (click)="addQuantity(1)"/>
+			</div>
+			<div fxFlex="10" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(0.5)" [disabled]="moneyQuantitiesCharged['0.5']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/50cent.png" (click)="addQuantity(0.5)"/>
+			</div>
+			<div fxFlex="10" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(0.2)" [disabled]="moneyQuantitiesCharged['0.2']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/20cent.png" (click)="addQuantity(0.2)"/>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="space-around center">     
+			<div fxFlex="10" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(0.1)" [disabled]="moneyQuantitiesCharged['0.1']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/10cent.png" (click)="addQuantity(0.1)"/>
+			</div>
+			<div fxFlex="10" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(0.05)" [disabled]="moneyQuantitiesCharged['0.05']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/5cent.png" (click)="addQuantity(0.05)"/>
+			</div>
+			<div fxFlex="10" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(0.02)" [disabled]="moneyQuantitiesCharged['0.02']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/2cent.png" (click)="addQuantity(0.02)"/>
+			</div>
+			<div fxFlex="10" class="money-container">
+				<button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="removeQuantity(0.01)" [disabled]="moneyQuantitiesCharged['0.01']==0">
+					<md-icon>clear</md-icon>
+				</button>
+				<img src="../../assets/img/currencies/euro/1cent.png" (click)="addQuantity(0.01)"/>
+			</div> 
+	 	</div>
+	</md-card>
+</div>

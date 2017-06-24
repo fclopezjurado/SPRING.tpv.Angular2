@@ -1,0 +1,26 @@
+<md-toolbar [ngClass]="'main-header'"><span>TPV online</span></md-toolbar>
+<div [ngClass]="'margin-top'">
+    <md-grid-list cols="12" rowHeight="150px">
+        <md-grid-tile *ngFor="let tile of tiles"
+                      [colspan]="tile.cols"
+                      [rowspan]="tile.rows"
+                      [ngClass]="tile.css"
+                      [ngSwitch]="tile.container">
+            <div *ngSwitchCase="'header'" [ngClass]="tile.sub_tile.style">
+                <h2>Welcome to TPV online</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo.</p>
+            </div>
+            <div *ngSwitchCase="'login'"
+                 [ngClass]="'auto-size-adjust-to-parent'">
+                <login></login>
+            </div>
+            <div *ngSwitchCase="'ticket-details'"
+                 [ngClass]="'auto-size-adjust-to-parent'">
+                <ticket></ticket>
+            </div>
+        </md-grid-tile>
+    </md-grid-list>
+</div>

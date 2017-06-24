@@ -1,0 +1,54 @@
+<div *ngIf="!loading; else spinner">
+	<div *ngIf="product; else error" id="dialog-content" fxLayout="column" fxLayoutGap="1em">
+		<md-card id="product-details-container" fxHide.xs fxHide.sm>
+			<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="space-between">
+				<div>
+					<img src="{{product.image}}" onError="this.src='assets/img/image-placeholder.gif';" width="175"/>
+				</div>
+				<md-card id="product-details-card">
+					<md-card-content>
+						<h1>{{product.description | capitalize}}</h1>
+						<p>
+							<b>Code</b>
+							: {{product.code}}
+						</p>
+						<p>
+							<b>Price</b>
+							: 
+							<currency [value]="product.retailPrice"></currency>
+						</p>
+					</md-card-content>
+				</md-card>
+			</md-card-content>
+		</md-card>
+		<md-card fxHide fxShow.xs fxShow.sm>
+			<md-card-content>
+				<h2>{{product.description | capitalize}}</h2>
+				<p>
+					<b>Code</b>
+					: {{product.code}}
+				</p>
+				<p>
+					<b>Price</b>
+					: 
+					<currency [value]="product.retailPrice"></currency>
+				</p>
+			</md-card-content>
+		</md-card>
+		<md-card>
+			<md-card-content>
+				<a>{{product.longDescription}}</a>
+			</md-card-content>
+		</md-card>
+		<button fxHide.xl fxHide.lg fxHide.md md-raised-button color="accent" (click)="addToCart()">Add to cart</button>
+		<div id="button-container">
+			<button fxHide.xs fxHide.sm md-raised-button color="accent" (click)="addToCart()">Add to cart</button>
+		</div>
+	</div>
+	<ng-template #error>
+		<b>Error loading product</b>
+	</ng-template>
+</div>
+<ng-template #spinner>
+	<md-spinner></md-spinner>
+</ng-template>

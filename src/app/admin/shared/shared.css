@@ -1,0 +1,17 @@
+/*
+ * CSS for components from "Admin" module
+ */
+
+@import url('../../shared/shared.css');
+
+.small-margin-top {
+    margin-top: 20px;
+}
+
+.medium-margin-top {
+    margin-top: 40px;
+}
+
+.margin-left {
+    margin-left: 15px;
+}

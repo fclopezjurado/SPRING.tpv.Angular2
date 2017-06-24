@@ -1,0 +1,36 @@
+<md-sidenav-container fullscreen>
+    <md-toolbar color="primary">
+        <div class="toolbar-right">
+            <button md-mini-fab color="accent" id="homeButton" routerLink="/home">
+                <md-icon class="md-24">home</md-icon>
+            </button>
+        </div>
+        <span><a routerLink="/admin">Admin</a></span>
+        <span class="toolbar-spacer"></span>
+        <date format="medium"></date>
+        <button md-mini-fab color="accent" (click)="logout()" id="logoutButton">
+            <md-icon class="md-24">exit_to_app</md-icon>
+        </button>
+    </md-toolbar>
+    <md-grid-list cols="12" rowHeight="50px">
+        <md-grid-tile [colspan]="12" [rowspan]="2">
+            <img class='banner' src="assets/img/banners/utm-banner.jpg">
+        </md-grid-tile>
+        <md-grid-tile [colspan]="12" [rowspan]="1">
+            <md-chip-list>
+                <md-chip color="accent" selected="true" routerLink="./tickets">Tickets</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./products">Products</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./categories">Categories</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./cashier_closures">Cashier closures</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./movements">Movements</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./providers">Providers</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./customers">Customers</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./operators">Operators</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./managers">Managers</md-chip>
+                <md-chip color="accent" selected="true" routerLink="./statistics">Statistics</md-chip>
+                <md-chip color="accent" selected="true" (click)="openClearAppDataDialog()">Clear app data</md-chip>
+            </md-chip-list>
+        </md-grid-tile>
+    </md-grid-list>
+    <router-outlet></router-outlet>
+</md-sidenav-container>

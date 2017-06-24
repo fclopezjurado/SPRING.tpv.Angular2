@@ -1,0 +1,12 @@
+<md-grid-list cols="7" rowHeight="50px">
+    <md-grid-tile [colspan]="1" [rowspan]="1">
+        <h2>{{usersType | capitalize}}</h2>
+        <button md-mini-fab color="accent" id="newUserButton" title="New"
+                (click)="openNewUserDialog()">
+            <md-icon class="md-24">add_circle_outline</md-icon>
+        </button>
+    </md-grid-tile>
+</md-grid-list>
+<filter (onUsersSearched)="loadResultsFound($event)" [endpoint]="endpoint"></filter>
+<results [results]="results" (onModifiedUser)="onModifiedUser($event)"
+         (onSelectedUser)="onSelectedUser($event)"></results>

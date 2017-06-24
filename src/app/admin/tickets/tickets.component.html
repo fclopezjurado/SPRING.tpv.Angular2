@@ -1,0 +1,8 @@
+<md-grid-list cols="7" rowHeight="50px">
+<md-grid-list cols="7" rowHeight="50px">
+    <md-grid-tile [colspan]="1" [rowspan]="1">
+        <h2>{{dataType | capitalize}}</h2>
+    </md-grid-tile>
+</md-grid-list>
+<filter (onTicketsSearched)="loadResultsFound($event)" [httpService]="httpService"></filter>
+<results [results]="results"></results>

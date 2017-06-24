@@ -1,0 +1,12 @@
+<md-toolbar class="main-header"><span>Clear application data</span></md-toolbar>
+<form md-dialog-content class="small-margin-top" [formGroup]="clearAppDataForm" (ngSubmit)="onSubmit()">
+    <span class="message">Are you sure want to clear all application data except admin user?</span>
+    <div class="buttons-container medium-margin-top">
+        <button md-raised-button type="submit" color="accent" [disabled]="!clearAppDataForm.valid">Clear data
+            <md-icon class="md-24 margin-left">clear_all</md-icon>
+        </button>
+        <button class="margin-left" md-raised-button type="button" color="accent" (click)="closeForm()">Close
+            <md-icon class="md-24 margin-left">close</md-icon>
+        </button>
+    </div>
+</form>

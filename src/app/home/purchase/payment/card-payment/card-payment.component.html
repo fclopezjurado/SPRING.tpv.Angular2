@@ -1,0 +1,7 @@
+<form (ngSubmit)="setAmountPaidWithCard($event)" #amountPaidWithCardForm="ngForm" fxLayout="column">
+	<a>Enter the total amount paid with credit or debit card:</a>
+	<md-input-container >
+		<input mdInput type="number" class="form-control" required placeholder="Total amount" [(ngModel)]="amount" name="amountInput" #name="ngModel" (blur)="formatInput()">
+	</md-input-container>				
+	<button md-raised-button color="primary" type="submit" [disabled]="!amountPaidWithCardForm.form.valid">OK</button >
+</form>

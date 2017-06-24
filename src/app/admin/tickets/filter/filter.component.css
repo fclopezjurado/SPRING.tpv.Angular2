@@ -1,0 +1,13 @@
+/*
+ * CSS for filter components
+ */
+
+@import url('../../../shared/shared.css');
+
+.filter {
+    margin-top: 10px;
+}
+
+.margin-right {
+    margin-right: 20px;
+}

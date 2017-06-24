@@ -1,0 +1,45 @@
+<md-sidenav-container fullscreen>
+	<md-toolbar color="primary">
+		<a routerLink="/home">TPV Online</a>
+		<span class="toolbar-spacer"></span>
+		<date format="medium"></date>
+		<button md-mini-fab color="accent" (click)="cart.open(); cartSideNavOpened=true;" id="cart-button" [disabled]="!openedCashier">
+			<md-icon class="md-24">shopping_cart</md-icon>
+		</button>
+		<button md-icon-button [mdMenuTriggerFor]="toolbarMenu">
+			<md-icon>more_vert</md-icon>
+		</button>
+		<md-menu #toolbarMenu="mdMenu">
+			<button md-menu-item routerLink="/home/movement" *ngIf="openedCashier">
+				<md-icon>compare_arrows</md-icon>
+				<span>Make a movement</span>
+			</button>
+			<button md-menu-item (click)="openOrderTrackingDialog()">
+				<md-icon>local_shipping</md-icon>
+				<span>Order tracking</span>
+			</button>
+			<button md-menu-item routerLink="/home/tickets-of-the-day" *ngIf="openedCashier">
+				<md-icon>today</md-icon>
+				<span>Tickets of the day</span>
+			</button>
+			<button md-menu-item routerLink="/home/close-cashier" *ngIf="openedCashier">
+				<md-icon>next_week</md-icon>
+				<span>Close cashier</span>
+			</button>
+			<button md-menu-item routerLink="/admin">
+				<md-icon>build</md-icon>
+				<span>Admin panel</span>
+			</button>
+			<button md-menu-item (click)="onClickLogout()">
+				<md-icon>exit_to_app</md-icon>
+				<span>Logout</span>
+			</button>
+		</md-menu>
+	</md-toolbar>
+	<div class="content">
+		<router-outlet></router-outlet>
+	</div>
+	<md-sidenav #cart align="end" [opened]="cartSideNavOpened">
+		<shopping-cart-view (closeSidenavEvent)= "closeCartSidenav()"></shopping-cart-view>
+	</md-sidenav>
+</md-sidenav-container>

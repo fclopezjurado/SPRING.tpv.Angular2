@@ -1,0 +1,66 @@
+<md-toolbar class="main-header"><span>Details</span></md-toolbar>
+<form md-dialog-content class="small-margin-top">
+    <div class="border padding">
+        <md-input-container class="form-element-container">
+            <input mdInput type="text" name="reference" placeholder="Reference" maxlength="255"
+                   value="{{ticket.reference}}" readonly>
+        </md-input-container>
+        <md-input-container class="form-element-container">
+            <input mdInput type="text" name="created" placeholder="Created" value="{{ticket.created}}" readonly>
+        </md-input-container>
+    </div>
+</form>
+<md-grid-list cols="1" rowHeight="40px" class="small-margin-top">
+    <md-grid-tile [colspan]="1" [rowspan]="1"><h3>User data</h3></md-grid-tile>
+</md-grid-list>
+<form md-dialog-content class="small-margin-top">
+    <div class="border padding">
+        <md-input-container class="form-element-container">
+            <input mdInput type="text" name="mobile" placeholder="Mobile" maxlength="9" minlength="9"
+                   value="{{user.mobile}}" readonly>
+        </md-input-container>
+        <md-input-container class="form-element-container">
+            <input mdInput type="email" name="email" placeholder="Email" maxlength="255" value="{{user.email}}"
+                   readonly>
+        </md-input-container>
+        <md-input-container class="form-element-container">
+            <input mdInput type="text" name="username" placeholder="Username" maxlength="255" value="{{user.username}}"
+                   readonly>
+        </md-input-container>
+        <md-input-container class="form-element-container">
+            <input mdInput type="text" name="address" placeholder="Address" maxlength="255" value="{{user.address}}"
+                   readonly>
+        </md-input-container>
+        <md-input-container class="form-element-container">
+            <input mdInput type="text" name="dni" placeholder="DNI" maxlength="9" minlength="9" value="{{user.dni}}"
+                   readonly>
+        </md-input-container>
+        <md-input-container class="form-element-container">
+            <input mdInput type="text" name="active" placeholder="Active" value="{{user.active | bool_to_string}}"
+                   readonly>
+        </md-input-container>
+    </div>
+</form>
+<md-grid-list cols="1" rowHeight="40px" class="small-margin-top">
+    <md-grid-tile [colspan]="1" [rowspan]="1"><h3>Shop lines</h3></md-grid-tile>
+</md-grid-list>
+<ngx-datatable
+        class="material small-margin-top"
+        [rows]="shoppings"
+        [columns]="headers"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="5"
+        [selectionType]="'single'"
+        (activate)="onActivate($event)">
+</ngx-datatable>
+<div class="buttons-container small-margin-top">
+    <button md-raised-button type="button" color="accent">Invoice
+        <md-icon class="md-24 margin-left">assignment</md-icon>
+    </button>
+    <button class="margin-left" md-raised-button type="button" color="accent" (click)="closeForm()">Close
+        <md-icon class="md-24 margin-left">close</md-icon>
+    </button>
+</div>

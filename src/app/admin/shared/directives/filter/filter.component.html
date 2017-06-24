@@ -1,0 +1,33 @@
+<md-grid-list class="filter" cols="12" rowHeight="100px">
+    <md-grid-tile [colspan]="2" [rowspan]="1">
+    </md-grid-tile>
+    <md-grid-tile class="border" [colspan]="8" [rowspan]="1">
+        <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+            <md-input-container class="margin-right">
+                <input mdInput type="text" name="mobile" placeholder="Mobile" maxlength="9" minlength="9"
+                       formControlName="mobile" #mobile>
+                <md-hint align="end">{{mobile.value.length}} / 9</md-hint>
+            </md-input-container>
+            <md-input-container class="margin-right">
+                <input mdInput type="text" name="dni" placeholder="DNI" maxlength="9" minlength="9"
+                       formControlName="dni" #dni>
+                <md-hint align="end">{{dni.value.length}} / 9</md-hint>
+            </md-input-container>
+            <md-input-container class="margin-right">
+                <input mdInput type="email" name="email" placeholder="Email" maxlength="255" formControlName="email"
+                       #email>
+                <md-hint align="end">{{email.value.length}} / 255</md-hint>
+            </md-input-container>
+            <button md-mini-fab color="accent" id="newSearchButton" type="submit" class="margin-right"
+                    title="Search" [disabled]="disableSubmit()">
+                <md-icon class="md-24">search</md-icon>
+            </button>
+            <button md-mini-fab color="accent" id="clearFormButton" type="reset" title="Clear filters"
+                    (click)="clearFilters()">
+                <md-icon class="md-24">clear_all</md-icon>
+            </button>
+        </form>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="2" [rowspan]="1">
+    </md-grid-tile>
+</md-grid-list>

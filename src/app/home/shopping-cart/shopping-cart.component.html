@@ -1,0 +1,110 @@
+<button id="mobile-menu-button" fxHide fxShow.xs md-icon-button mdTooltip="Close" mdTooltipPosition="below" (click)="close()">
+    <md-icon>subject</md-icon>
+</button>
+<div fxLayout="row">
+    <div fxFlex="50">
+        <h2>Cart</h2>
+    </div>
+    <div fxFlex="50">
+        <button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="clearCart()" [disabled]="cartProducts.length==0" id="clear-cart-button">
+            <md-icon>clear</md-icon>
+        </button>
+        <button id="open-calculator-button" md-mini-fab color="primary" mdTooltip="Open calculator" mdTooltipPosition="below" (click)="openCalculator()" fxHide.xs>
+            <md-icon>keyboard</md-icon>
+        </button>
+    </div>
+</div>
+<ngx-datatable
+    fxHide.xs
+    class="material"
+    [messages]="{emptyMessage: 'The shopping cart is empty', totalMessage: 'products'}"
+    [rowHeight]="'auto'"
+    [columnMode]="'force'"
+    [rows]="cartProducts"
+    [reorderable]="false"
+    [footerHeight]="50"
+    [limit]="5"
+    [columns]="columns">
+    <ngx-datatable-column name="Description" [flexGrow]="3">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+            {{value | capitalize}}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Price" prop="retailPrice" [flexGrow]="2">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{row.retailPrice}}
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Nº" prop="amount" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+            <input mdInput type="number" step="1" min="1" (blur)="updateProduct(row, $event, 'amount')" [value]="value"/>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="%" prop="discount" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+            <input mdInput type="number" step="0.01" min="0.00" max="100.00" (blur)="updateProduct(row, $event, 'discount')" [value]="roundDiscount(value)"/>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Total" prop="totalPrice" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row" >
+            <input mdInput type="number" step="0.01" min="0.00" max="100.00" (blur)="updateTotalPrice(row, $event)" [value]="calculateProductTotal(row)"/>
+        </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name=" " prop="delivered" [flexGrow]="2">
+        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+            <md-checkbox (change)="updateProduct(row, $event, 'delivered')" [checked]="value" mdTooltip="Delivered" mdTooltipPosition="left"></md-checkbox>
+            <button md-icon-button (click)="removeFromCart(row)" mdTooltip="Delete from cart" mdTooltipPosition="left">
+                <md-icon class="md-24" color="warn">delete</md-icon>
+            </button>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>
+<md-card fxHide fxShow.xs>
+    <md-list *ngFor="let product of cartProducts">
+        <md-list-item>
+            <p>
+                {{product.description}} (x{{product.amount}})
+            </p>
+            &nbsp;
+            <p> 
+                <md-input-container>
+                    <input mdInput type="number" step="0.01" min="0.00" max="100.00" [(ngModel)]="product.discount"/>
+                </md-input-container>
+            </p>
+            &nbsp;
+            <p>
+                <md-checkbox [(ngModel)]="product.delivered" mdTooltip="Delivered" mdTooltipPosition="left"></md-checkbox> 
+            </p>
+            <p>
+                <button md-icon-button (click)="removeFromCart(product)" mdTooltip="Delete from cart" mdTooltipPosition="left">
+                    <md-icon class="md-24" color="warn">delete</md-icon>
+                </button>
+            </p>
+        </md-list-item>
+        <md-divider></md-divider>
+    </md-list>
+</md-card>
+<p>
+    Total: 
+    <b id="total-price">
+      <currency [value]="totalPrice"></currency>
+    </b>
+</p>
+<div fxLayout="column" id="padding-container" fxLayoutGap="1em">
+    <md-card>
+        <form fxLayout="column" (ngSubmit)="onSubmit($event)" #cartForm="ngForm">
+            <div fxLayout="column">
+                <div fxLayoutAlign="center">Add product by code: </div>
+                <md-input-container>
+                    <input mdInput type="text" maxlength="255" placeholder="Product code" class="form-control" id="code-input" required [(ngModel)]="codeInput" name="code-input" #name="ngModel">
+                </md-input-container>
+            </div>
+            <button md-raised-button color="primary" type="submit" [disabled]="!cartForm.form.valid" id="submit-code-input-button">Submit</button>
+        </form>
+    </md-card>
+    <md-card >
+        <div class="form-group center" fxLayout="column" >
+            <button md-raised-button color="accent" (click)="checkout()" [disabled]="cartProducts.length==0" id="checkout-button">Check out</button>
+        </div>
+    </md-card>
+</div>

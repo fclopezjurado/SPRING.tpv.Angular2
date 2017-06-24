@@ -1,0 +1,17 @@
+<md-toolbar [ngClass]="'secondary-header'">
+    <span>Ticket details</span>
+</md-toolbar>
+<form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+    <md-input-container [ngClass]="'form-element-container'">
+        <input mdInput type="text" name="reference" placeholder="Ticket reference"
+               formControlName="reference" required #reference>
+        <md-hint align="end">{{reference.value.length}} / 255</md-hint>
+    </md-input-container>
+    <div *ngIf="formErrors.reference"
+         [ngClass]="['form-element-container', 'error']">
+        {{ formErrors.reference }}
+    </div>
+    <button md-raised-button type="submit"
+            [disabled]="!ticketForm.valid">OK
+    </button>
+</form>

@@ -1,0 +1,39 @@
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center" fxLayoutGap="1em">
+	<div>
+		<md-card>
+			<user-association-view></user-association-view>
+		</md-card>
+	</div>
+	<div fxLayout="column">
+		<md-card>
+			<md-card-title>Payment</md-card-title>
+			<md-card-content fxLayout="column" fxLayoutAlign="space-around center">
+				<div fxFlex="40">
+					<h2>Total: 
+						<span class="text-primary">
+							<currency [value]="totalPrice"></currency>
+						</span>
+					</h2>
+				</div>
+				<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em">
+					<md-card >
+						<md-card-content fxLayout="column" fxLayoutGap="1em" >
+							<button md-raised-button color="primary" (click)="openCashPaymentDialog()" [disabled]="isShoppingCartEmpty() || paidOut" id="cash-payment-button" mdTooltip="Cash payment" mdTooltipPosition="right">Cash</button>
+							<button md-raised-button color="primary" (click)="openAddVoucherDialog()" [disabled]="isShoppingCartEmpty() || vouchers.length > 4 || paidOut" mdTooltip="Voucher payment" mdTooltipPosition="right">Voucher</button>
+							<button md-raised-button color="primary" (click)="openCardPaymentDialog()" [disabled]="isShoppingCartEmpty() || paidOut" mdTooltip="Card payment" mdTooltipPosition="right">Card</button>
+						</md-card-content>
+					</md-card>
+					<md-card>
+						<md-card-content fxLayout="column" fxLayoutGap="1em">
+							<button md-raised-button color="primary" (click)="submitOrder()" [disabled]="!paidOut">Submit order</button>
+							<button md-raised-button color="warn" (click)="cancel()">Cancel</button>
+						</md-card-content>
+					</md-card>
+				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+	<div id="money-received-container">
+		<change-view></change-view>
+	</div>
+</div>

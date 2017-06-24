@@ -1,0 +1,36 @@
+<md-grid-list class="filter" cols="12" rowHeight="100px">
+    <md-grid-tile [colspan]="1" [rowspan]="1">
+    </md-grid-tile>
+    <md-grid-tile class="border" [colspan]="10" [rowspan]="1">
+        <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+            <md-input-container class="margin-right">
+                <input mdInput type="text" name="user" placeholder="User" maxlength="9" minlength="9"
+                       formControlName="user" #user>
+                <md-hint align="end">{{user.value.length}} / 9</md-hint>
+            </md-input-container>
+            <md-input-container class="margin-right">
+                <input mdInput type="email" name="reference" placeholder="Reference" maxlength="255"
+                       formControlName="reference" #reference>
+                <md-hint align="end">{{reference.value.length}} / 255</md-hint>
+            </md-input-container>
+            <md-input-container class="margin-right">
+                <input mdInput type="date" name="start_date" placeholder="Start date" formControlName="start_date"
+                       #start_date>
+            </md-input-container>
+            <md-input-container class="margin-right">
+                <input mdInput type="date" name="end_date" placeholder="End date" formControlName="end_date"
+                       #end_date>
+            </md-input-container>
+            <button md-mini-fab color="accent" id="newSearchButton" type="submit" class="margin-right"
+                    title="Search" [disabled]="disableSubmit()">
+                <md-icon class="md-24">search</md-icon>
+            </button>
+            <button md-mini-fab color="accent" id="clearFormButton" type="reset" title="Clear filters"
+                    (click)="clearFilters()">
+                <md-icon class="md-24">clear_all</md-icon>
+            </button>
+        </form>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="1" [rowspan]="1">
+    </md-grid-tile>
+</md-grid-list>

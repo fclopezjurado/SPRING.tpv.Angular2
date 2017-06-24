@@ -1,0 +1,93 @@
+#scroll-container {
+	overflow-y: scroll;
+	position: relative;
+}
+
+.image-container {
+	padding: 0.5em;
+}
+
+.category-container {
+	padding: 0.5em;
+	position: relative;
+}
+
+.category-card {
+	cursor: pointer;
+}
+
+.add-to-cart-button {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+#reset-search-button {
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 3;
+}
+
+#breadcrumb {
+	font-size: 17px;
+}
+
+md-spinner {
+	margin: 0 auto;
+	margin-top: 2em;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+#floating-buttons-container {
+	position: absolute;
+	z-index: 2;
+}
+
+#floating-buttons-container > button {
+	margin-bottom: 0.5em;
+	display: block;
+}
+
+@media only screen and (max-width: 599px) {
+	#breadcrumb {
+		display: block;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	.category-container {
+		max-width: 25%;
+	}
+	.margin-sides {
+		margin-right: 5em;
+		margin-left: 5em;
+		position: relative;
+	}
+	#floating-buttons-container {
+		padding-top: 5em;
+	}
+}
+
+@media only screen and (min-width: 960px) {
+	form {
+		width: 30em;
+	}
+	md-input-container {
+		width: 20em;
+	}
+	#search-results-container {
+		padding-left: 2em;
+	}
+	#search-results-container > a {
+		font-size: 1.5em;
+	}
+	.margin-sides {
+		margin-right: 10em;
+		margin-left: 10em;
+		position: relative;
+	}
+}

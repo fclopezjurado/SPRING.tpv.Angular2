@@ -1,0 +1,61 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import '/node_modules/@swimlane/ngx-datatable/release/index.css';
+@import '/node_modules/@swimlane/ngx-datatable/release/themes/material.css';
+@import '/node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
+@import '/node_modules/ng2-toasty/style-default.css';
+@import '~@angular/material/theming';
+@import 'theme';
+
+body {
+	background-color: #f1f1f1;
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+}
+
+.content {
+	padding: 1em;
+}
+
+.float-right {
+	float: right;
+}
+
+.toolbar-right {
+	padding: 0 14px;
+}
+
+.toolbar-spacer {
+	flex: 1 1 auto;
+}
+
+.datatable-body-row {
+	border-top-style: solid;
+	border-top-color: lightgrey;
+	border-top-width: 0.5px;
+}
+
+/*Chrome yellow inputs bug fix*/
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+input:-webkit-autofill {
+	text-shadow: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+a, a:visited {
+    color: inherit;
+}
+
+.text-primary {
+	color: mat-color($tpv-app-primary);
+}

@@ -1,0 +1,19 @@
+/*
+ * CSS for details component
+ */
+
+@import url('../../shared/shared.css');
+
+.form-element-container {
+    margin-right: 5%;
+}
+
+.padding {
+    padding: 10px;
+}
+
+.buttons-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}

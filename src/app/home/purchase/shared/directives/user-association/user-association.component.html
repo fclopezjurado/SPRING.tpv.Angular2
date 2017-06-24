@@ -1,0 +1,79 @@
+<div *ngIf="userAssociated==null">
+	<div *ngIf="!newClientOpened; else newClient">
+		<button md-mini-fab color="primary" mdTooltip="New client" mdTooltipPosition="below" (click)="openNewClient()" id="new-client-button">
+			<md-icon>add</md-icon>
+		</button>
+		<md-card-title>Client</md-card-title>
+		<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="space-between center">
+			<form (ngSubmit)="associate($event)" #mobileNumberForm="ngForm" fxLayout="column">
+				<div class="form-group" fxLayout="column">
+					<p>Associate a client by entering his number: </p>
+					<md-input-container >
+						<input mdInput type="number" step="1" min="13" max="111" max="9999999999999" class="form-control" id="mobile-number-input" required placeholder="Mobile number"
+						[(ngModel)]="mobileNumberInput" name="mobileNumberInput" #name="ngModel" (blur)="formatMobileNumberInput()">
+					</md-input-container>				
+				</div>
+				<button md-raised-button color="primary" type="submit" [disabled]="!mobileNumberForm.form.valid" id="user-association-submit-button">OK</button >
+			</form>
+		</md-card-content>
+	</div>
+	<ng-template #newClient>
+		<form (ngSubmit)="newUser($event)" #userCreationForm="ngForm">
+			<div class="form-group" fxLayout="column" fxLayoutGap="1em">
+				<p>Fill the form in order to create a client:</p>
+				<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
+					<md-input-container>
+				    	<input mdInput placeholder="Mobile" type="number" class="form-control" required [(ngModel)]="newUserInput.mobile" name="inputUserMobile" #mobileInput (blur)="formatNewUserMobileNumberInput()">
+				 	</md-input-container>
+				 	<md-input-container>
+				    	<input mdInput placeholder="User name" type="text" class="form-control" required [(ngModel)]="newUserInput.username" name="inputUserUsername" #usernameInput maxLength="10">
+				    	<md-hint align="end">{{usernameInput.value.length}} / 10</md-hint>
+				 	</md-input-container>
+			  	</div>
+			  	<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
+				  	<md-input-container>
+				    	<input mdInput placeholder="National Identification Number" type="text" class="form-control" required [(ngModel)]="newUserInput.dni" name="inputUserDNI">
+				  	</md-input-container>
+				  	<md-input-container>
+				    	<input mdInput placeholder="Email" type="email" class="form-control" required [(ngModel)]="newUserInput.email" name="inputUserEmail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+				  	</md-input-container>
+			 	</div>
+			  	<md-input-container>
+			    	<input mdInput placeholder="Address" type="text" class="form-control" required [(ngModel)]="newUserInput.address" name="inputUserAddress">
+			  	</md-input-container>
+			  	<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" id="button-container">
+				 	<button md-raised-button color="warn" type="button" (click)="cancelNewClient()">Cancel</button>
+					<button md-raised-button color="primary" type="submit" [disabled]="!userCreationForm.form.valid">Create</button>
+				</div>
+			</div>
+		</form>
+	</ng-template>
+</div>
+<div *ngIf="userAssociated!=null">
+	<button md-mini-fab color="warn" mdTooltip="Disassociate client" mdTooltipPosition="below" (click)="disassociate()" id="disassociate-user-button">
+		<md-icon>clear</md-icon>
+	</button>
+	<md-card-title>Client data</md-card-title>
+	<md-card-content>
+		<p>
+			<b>Username</b>
+			: {{userAssociated.username}}
+		</p>
+		<p>
+			<b>Mobile</b>
+			: {{userAssociated.mobile}}
+		</p>
+		<p>
+			<b>Identification</b>
+			: {{userAssociated.dni}}
+		</p>
+		<p>
+			<b>Email</b>
+			: {{userAssociated.email}}
+		</p>
+		<p>
+			<b>Address</b>
+			: {{userAssociated.address}}
+		</p>
+	</md-card-content>
+</div>
