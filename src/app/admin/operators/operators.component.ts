@@ -3,7 +3,8 @@
  */
 
 import {Component} from '@angular/core';
-import {OPERATORS_URI, OPERATORS} from '../admin.config'
+import {USERS_URI, OPERATORS} from '../admin.config'
+import {ROLE_OPERATOR} from '../../app.config';
 
 @Component({
     templateUrl: './operators.component.html'
@@ -11,9 +12,11 @@ import {OPERATORS_URI, OPERATORS} from '../admin.config'
 export class OperatorsComponent {
     endpoint: string;
     usersType: string;
+    role: string;
 
     constructor() {
-        this.endpoint = OPERATORS_URI;
+        this.endpoint = USERS_URI;
         this.usersType = OPERATORS;
+        this.role = ROLE_OPERATOR;
     }
 }
