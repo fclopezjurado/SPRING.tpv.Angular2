@@ -3,7 +3,8 @@
  */
 
 import {Component} from '@angular/core';
-import {CUSTOMERS_URI, CUSTOMERS} from '../admin.config'
+import {USERS_URI, CUSTOMERS} from '../admin.config'
+import {ROLE_CUSTOMER} from '../../app.config'
 
 @Component({
     templateUrl: './customers.component.html'
@@ -11,9 +12,11 @@ import {CUSTOMERS_URI, CUSTOMERS} from '../admin.config'
 export class CustomersComponent {
     endpoint: string;
     usersType: string;
+    role: string;
 
     constructor() {
-        this.endpoint = CUSTOMERS_URI;
+        this.endpoint = USERS_URI;
         this.usersType = CUSTOMERS;
+        this.role = ROLE_CUSTOMER;
     }
 }

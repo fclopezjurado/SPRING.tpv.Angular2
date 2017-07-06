@@ -7,6 +7,6 @@
         </button>
     </md-grid-tile>
 </md-grid-list>
-<filter (onUsersSearched)="loadResultsFound($event)" [endpoint]="endpoint"></filter>
-<results [results]="results" (onModifiedUser)="onModifiedUser($event)"
-         (onSelectedUser)="onSelectedUser($event)"></results>
+<filter (onFilterUsers)="onFilterUsers($event)" [role]="role"></filter>
+<results [results]="results" [page]="page" (onModifiedUser)="onModifiedUser($event)"
+         (onSelectedUser)="onSelectedUser($event)" (onChangePage)="onChangePage($event)"></results>

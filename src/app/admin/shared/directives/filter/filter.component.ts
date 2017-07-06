@@ -4,29 +4,20 @@
 
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {
-    User,
-    MOBILE_ATTRIBUTE_NAME,
-    DNI_ATTRIBUTE_NAME,
-    EMAIL_ATTRIBUTE_NAME
-} from '../../../../shared/models/user.model';
+import {User} from '../../../../shared/models/user.model';
 import {RegExpFormValidatorService} from '../../../../shared/services/reg-exp-form-validator.service';
 import {ToastService} from '../../../../shared/services/toast.service';
-import {TPVHTTPError} from "../../../../shared/models/tpv-http-error.model";
-import {URLSearchParams} from '@angular/http';
-import {isNull} from "util";
-import {HTTPService} from "../../../../shared/services/http.service";
 
 @Component({
     selector: 'filter',
-    inputs: ['endpoint'],
-    outputs: ['onUsersSearched'],
+    inputs: ['role'],
+    outputs: ['onFilterUsers'],
     templateUrl: './filter.component.html',
     styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
+    role: string;
     user: User;
-    endpoint: string;
     filterForm: FormGroup;
     validationMessages = {
         'mobile': {
@@ -48,12 +39,12 @@ export class FilterComponent implements OnInit {
         'dni': '',
         'email': ''
     };
-    onUsersSearched: EventEmitter<User[]>;
+    onFilterUsers: EventEmitter<User>;
 
     constructor(private formBuilder: FormBuilder, private formValidatorByRegExp: RegExpFormValidatorService,
-                private toastService: ToastService, private httpService: HTTPService) {
+                private toastService: ToastService) {
         this.clearUser();
-        this.onUsersSearched = new EventEmitter();
+        this.onFilterUsers = new EventEmitter();
     }
 
     clearUser() {
@@ -61,49 +52,14 @@ export class FilterComponent implements OnInit {
     }
 
     onSubmit(): void {
-        let formValues = this.filterForm.value;
-        let params = new URLSearchParams();
-        this.user = new User(parseInt(formValues.mobile), null, formValues.dni, formValues.email);
-        let fieldName: string = null;
-        let fieldValue = null;
-
-        if (!isNull(this.user.mobile) && (this.user.mobile.valueOf() > 0)) {
-            fieldName = MOBILE_ATTRIBUTE_NAME;
-            fieldValue = this.user.mobile;
-        }
-        else if (!isNull(this.user.dni) && (this.user.dni.length > 0)) {
-            fieldName = DNI_ATTRIBUTE_NAME;
-            fieldValue = this.user.dni;
-        }
-        else if (!isNull(this.user.email) && (this.user.email.length > 0)) {
-            fieldName = EMAIL_ATTRIBUTE_NAME;
-            fieldValue = this.user.email;
-        }
-
-        params.set(fieldName, fieldValue);
-        this.httpService.get(this.endpoint, null, params).subscribe(
-            data => {
-                this.clearForm();
-                this.handleOK(data.data)
-            },
-            error => {
-                this.clearForm();
-                this.handleError(error)
-            }
-        );
+        const formValues = this.filterForm.value;
+        this.user = new User(parseInt(formValues.mobile, 10), null, formValues.dni, formValues.email);
+        this.onFilterUsers.emit(this.user);
     }
 
     clearForm() {
         this.clearUser();
         this.filterForm.reset();
-    }
-
-    handleOK(customers: User[]) {
-        this.onUsersSearched.emit(customers);
-    }
-
-    handleError(httpError: TPVHTTPError) {
-        this.toastService.info('ERROR in "filters"', httpError.error);
     }
 
     disableSubmit(): boolean {
@@ -137,7 +93,7 @@ export class FilterComponent implements OnInit {
         if (!this.filterForm)
             return;
 
-        let form = this.filterForm;
+        const form = this.filterForm;
 
         for (const field in this.formErrors) {
             this.formErrors[field] = '';
@@ -158,6 +114,6 @@ export class FilterComponent implements OnInit {
 
     clearFilters() {
         this.clearForm();
-        this.onSubmit();
+        this.onFilterUsers.emit(null);
     }
 }

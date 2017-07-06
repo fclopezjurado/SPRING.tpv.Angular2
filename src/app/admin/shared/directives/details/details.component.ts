@@ -3,12 +3,12 @@
  */
 
 import {Component, Inject, OnInit} from '@angular/core';
-import {User} from '../../../../shared/models/user.model';
+import {User, MOBILE_ATTRIBUTE_NAME} from '../../../../shared/models/user.model';
+import {Page, SIZE_ATTRIBUTE_NAME, PAGE_ATTRIBUTE_NAME, SMALL_PAGE_SIZE} from '../../models/page.model';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {Ticket, REFERENCE_ATTRIBUTE_NAME, CREATED_DATE_ATTRIBUTE_NAME} from '../../models/ticket.model';
 import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../../../shared/services/toast.service';
-import {USER_ID_ATTRIBUTE_NAME} from '../../models/ticket.model';
 import {MdDialog} from '@angular/material';
 import {EditUserDialog} from '../edit-user/edit-user.component';
 import {CapitalizePipe} from '../../../../shared/pipes/capitalize.pipe';
@@ -26,37 +26,54 @@ export class UserDetailsDialog implements OnInit {
     tickets: Ticket[];
     headers: Object;
     capitalizePipe: CapitalizePipe;
+    page: Page;
 
     constructor(@Inject(MD_DIALOG_DATA) private data: { user: User },
                 public dialogRef: MdDialogRef<UserDetailsDialog>, private httpService: HTTPService,
                 private toastService: ToastService, private editUserDialog: MdDialog) {
         this.capitalizePipe = new CapitalizePipe();
         this.user = this.data.user;
+        this.page = new Page(SMALL_PAGE_SIZE);
         this.headers = [{name: this.capitalizePipe.transform(REFERENCE_ATTRIBUTE_NAME, false)},
             {name: this.capitalizePipe.transform(CREATED_DATE_ATTRIBUTE_NAME, false)}
         ]
     }
 
     ngOnInit(): void {
-        let params = new URLSearchParams();
-        params.set(USER_ID_ATTRIBUTE_NAME, this.user.id.toString());
+        const params = new URLSearchParams();
+        params.set(MOBILE_ATTRIBUTE_NAME, this.user.mobile.toString());
+        params.set(SIZE_ATTRIBUTE_NAME, this.page.size.toString());
+        params.set(PAGE_ATTRIBUTE_NAME, this.page.pageNumber.toString());
 
         this.httpService.get(TICKETS_URI, null, params).subscribe(
-            results => this.tickets = results.data,
+            results => this.handleOK(results),
             error => this.handleError(error)
         );
+    }
+
+    handleOK(response: any) {
+        this.page.size = response.size;
+        this.page.totalElements = response.totalElements;
+        this.page.totalPages = response.totalPages;
+        this.page.pageNumber = response.number;
+        this.tickets = response.content;
     }
 
     handleError(httpError: TPVHTTPError) {
         this.toastService.info('ERROR getting tickets from server', httpError.error);
     }
 
-    deleteUser() {
-        this.dialogRef.close(null);
+    closeForm() {
+        this.dialogRef.close();
+    }
+
+    changePage(page: Page) {
+        this.page = page;
+        this.ngOnInit();
     }
 
     editUser() {
-        let dialogRef = this.editUserDialog.open(EditUserDialog, {data: {user: this.user}});
+        const dialogRef = this.editUserDialog.open(EditUserDialog, {data: {user: this.user}});
         dialogRef.afterClosed().subscribe(user => {
             if (!isUndefined(user))
                 this.dialogRef.close(new User(user.mobile, user.password, user.dni, user.email, user.username,

@@ -4,15 +4,17 @@
 
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Ticket, REFERENCE_ATTRIBUTE_NAME, USER_ID_ATTRIBUTE_NAME} from '../../shared/models/ticket.model';
+import {Ticket} from '../../shared/models/ticket.model';
+import {MOBILE_ATTRIBUTE_NAME} from '../../../shared/models/user.model';
 import {Filter, START_DATE_ATTRIBUTE_NAME, END_DATE_ATTRIBUTE_NAME} from './filter.model';
 import {ToastService} from '../../../shared/services/toast.service';
 import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
 import {TPVHTTPError} from "../../../shared/models/tpv-http-error.model";
-import {isNull} from "util";
+import {isNull, isUndefined} from "util";
 import {HTTPService} from "../../../shared/services/http.service";
 import {URLSearchParams} from "@angular/http";
-import {TICKETS_URI} from '../../admin.config';
+import {TICKETS_URI, ALL_PATH} from '../../admin.config';
+import {Utils} from "../../shared/models/utils.service";
 
 @Component({
     selector: 'filter',
@@ -26,7 +28,7 @@ export class FilterComponent implements OnInit {
     httpService: HTTPService;
     filterForm: FormGroup;
     validationMessages = {
-        'user': {
+        'mobile': {
             'minlength': 'user must be 9 digits long.',
             'maxlength': 'user must be 9 digits long.',
             'invalid': 'user is invalid.'
@@ -42,7 +44,7 @@ export class FilterComponent implements OnInit {
         }
     };
     formErrors = {
-        'user': '',
+        'mobile': '',
         'reference': '',
         'start_date': '',
         'end_date': ''
@@ -60,34 +62,39 @@ export class FilterComponent implements OnInit {
     }
 
     onSubmit(): void {
-        let formValues = this.filterForm.value;
-        let params = new URLSearchParams();
-        this.filter = new Filter(formValues.user, formValues.reference, formValues.start_date, formValues.end_date);
+        const formValues = this.filterForm.value;
+        const params = new URLSearchParams();
+        this.filter = new Filter(formValues.mobile, formValues.reference, formValues.start_date, formValues.end_date);
         let fieldName: string = null;
         let fieldValue = null;
+        let endpoint = TICKETS_URI;
 
-        if (!isNull(this.filter.user) && (this.filter.user.valueOf() > 0)) {
-            fieldName = USER_ID_ATTRIBUTE_NAME;
-            fieldValue = this.filter.user;
+        if (!isNull(this.filter.mobile) && (this.filter.mobile > 0)) {
+            fieldName = MOBILE_ATTRIBUTE_NAME;
+            fieldValue = this.filter.mobile;
         }
         else if (!isNull(this.filter.reference) && (this.filter.reference.length > 0)) {
-            fieldName = REFERENCE_ATTRIBUTE_NAME;
-            fieldValue = this.filter.reference;
+            endpoint += '/' + this.filter.reference;
         }
         else if (!isNull(this.filter.start_date) && (this.filter.start_date.length > 0)) {
             fieldName = START_DATE_ATTRIBUTE_NAME;
-            fieldValue = this.filter.start_date;
+            const date = new Date(this.filter.start_date);
+            fieldValue = date.getTime();
         }
         else if (!isNull(this.filter.end_date) && (this.filter.end_date.length > 0)) {
             fieldName = END_DATE_ATTRIBUTE_NAME;
-            fieldValue = this.filter.end_date;
+            const date = new Date(this.filter.end_date);
+            fieldValue = date.getTime();
+        }
+        else {
+            endpoint += ALL_PATH;
         }
 
         params.set(fieldName, fieldValue);
-        this.httpService.get(TICKETS_URI, null, params).subscribe(
-            data => {
+        this.httpService.get(endpoint, null, params).subscribe(
+            response => {
+                this.handleOK(response);
                 this.clearForm();
-                this.handleOK(data.data)
             },
             error => {
                 this.clearForm();
@@ -101,8 +108,51 @@ export class FilterComponent implements OnInit {
         this.filterForm.reset();
     }
 
-    handleOK(tickets: Ticket[]) {
+    handleOK(response: any) {
+        let tickets = [];
+
+        if (!isUndefined(response.content)) {
+            tickets = this.loadResultsByMobile(response.content);
+        }
+        else if (!isNull(this.filter.reference) && (this.filter.reference.length > 0)) {
+            tickets = this.loadResultsByReference(response);
+        }
+        else {
+            tickets = this.loadResults(response);
+        }
+
         this.onTicketsSearched.emit(tickets);
+    }
+
+    loadResults(tickets): any {
+        for (let index = 0; index < tickets.length; index++) {
+            tickets[index].created = Utils.formatDate(tickets[index].created);
+        }
+
+        return tickets;
+    }
+
+    loadResultsByMobile(tickets): any {
+        if (!isNull(this.filter.mobile) && (this.filter.mobile > 0)) {
+            for (let index = 0; index < tickets.length; index++) {
+                tickets[index].mobile = this.filter.mobile;
+                tickets[index].created = Utils.formatDate(tickets[index].created);
+            }
+        }
+
+        return tickets;
+    }
+
+    loadResultsByReference(ticket): any {
+        const tickets = [];
+
+        if (!isUndefined(ticket.userMobile)) {
+            ticket.mobile = ticket.userMobile;
+            ticket.created = Utils.formatDateFromYYYYMMDD(ticket.created);
+        }
+
+        tickets.push(ticket);
+        return tickets;
     }
 
     handleError(httpError: TPVHTTPError) {
@@ -110,8 +160,8 @@ export class FilterComponent implements OnInit {
     }
 
     disableSubmit(): boolean {
-        return (!(((this.filterForm.controls['user'].dirty)
-            && (this.formErrors.user.length === 0))
+        return (!(((this.filterForm.controls['mobile'].dirty)
+            && (this.formErrors.mobile.length === 0))
             || ((this.filterForm.controls['reference'].dirty)
             && (this.formErrors.reference.length === 0))
             || ((this.filterForm.controls['start_date'].dirty)
@@ -127,7 +177,7 @@ export class FilterComponent implements OnInit {
 
     buildForm(): void {
         this.filterForm = this.formBuilder.group({
-            'user': [this.filter.user, [Validators.minLength(9), Validators.maxLength(9),
+            'mobile': [this.filter.mobile, [Validators.minLength(9), Validators.maxLength(9),
                 this.formValidatorByRegExp.regExpFormValidator(/[0-9]{9}/)]],
             'reference': [this.filter.reference, [Validators.maxLength(255)]],
             'start_date': [this.filter.start_date, [
@@ -141,10 +191,11 @@ export class FilterComponent implements OnInit {
     }
 
     onValueChanged(data?: any): boolean {
-        if (!this.filterForm)
-            return;
+        if (!this.filterForm) {
+            return
+        }
 
-        let form = this.filterForm;
+        const form = this.filterForm;
 
         for (const field in this.formErrors) {
             this.formErrors[field] = '';

@@ -55,7 +55,7 @@ export class TicketDetailsDialog implements OnInit {
     }
 
     getShoppings() {
-        let params = new URLSearchParams();
+        const params = new URLSearchParams();
 
         params.set(TICKET_ATTRIBUTE_NAME, this.ticket.id.toString());
         this.httpService.get(SHOPPINGS_URI, null, params).subscribe(
@@ -65,23 +65,23 @@ export class TicketDetailsDialog implements OnInit {
     }
 
     ngOnInit(): void {
-        let params = new URLSearchParams();
-        params.set(ID_ATTRIBUTE_NAME, this.ticket.user.toString());
+        const params = new URLSearchParams();
+        /*params.set(ID_ATTRIBUTE_NAME, this.ticket.user.toString());
 
         this.httpService.get(USERS_URI, null, params).subscribe(
             results => this.user = results.data[0],
             error => this.handleError(error)
-        );
+        );*/
 
         this.getShoppings();
     }
 
     onActivate(selection: any) {
         this.selected = selection.row;
-        let shopping = new Shopping(selection.row.id, selection.row.amount, selection.row.discount,
+        const shopping = new Shopping(selection.row.id, selection.row.amount, selection.row.discount,
             selection.row.description, selection.row.price, selection.row.state, selection.row.code,
             selection.row.ticket);
-        let dialogRef = this.editShoppingDialog.open(EditShoppingDialog, {data: {shopping: shopping}});
+        const dialogRef = this.editShoppingDialog.open(EditShoppingDialog, {data: {shopping: shopping}});
 
         dialogRef.afterClosed().subscribe(shopping => {
             this.editShopping(shopping);
