@@ -4,9 +4,9 @@
     <md-grid-tile class="border" [colspan]="10" [rowspan]="1">
         <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
             <md-input-container class="margin-right">
-                <input mdInput type="text" name="user" placeholder="User" maxlength="9" minlength="9"
-                       formControlName="user" #user>
-                <md-hint align="end">{{user.value.length}} / 9</md-hint>
+                <input mdInput type="text" name="mobile" placeholder="Mobile" maxlength="9" minlength="9"
+                       formControlName="mobile" #mobile>
+                <md-hint align="end">{{mobile.value.length}} / 9</md-hint>
             </md-input-container>
             <md-input-container class="margin-right">
                 <input mdInput type="email" name="reference" placeholder="Reference" maxlength="255"
@@ -27,7 +27,7 @@
             </button>
             <button md-mini-fab color="accent" id="clearFormButton" type="reset" title="Clear filters"
                     (click)="clearFilters()">
-                <md-icon class="md-24">clear_all</md-icon>
+                <md-icon class="md-24">clear</md-icon>
             </button>
         </form>
     </md-grid-tile>
