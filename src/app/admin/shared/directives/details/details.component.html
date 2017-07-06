@@ -38,14 +38,18 @@
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
-        [limit]="5"
-        [selectionType]="'single'">
+        [selectionType]="'single'"
+        [externalPaging]="true"
+        [count]="page.totalElements"
+        [offset]="page.pageNumber"
+        [limit]="page.size"
+        (page)='changePage($event)'>
 </ngx-datatable>
 <div class="buttons-container small-margin-top">
-    <button md-raised-button type="button" color="accent" (click)="deleteUser()">Delete
-        <md-icon class="md-24 margin-left">delete</md-icon>
-    </button>
     <button class="margin-left" md-raised-button type="button" color="accent" (click)="editUser()">Edit
         <md-icon class="md-24 margin-left">edit</md-icon>
+    </button>
+    <button md-raised-button type="button" color="accent" (click)="closeForm()">Close
+        <md-icon class="md-24 margin-left">close</md-icon>
     </button>
 </div>

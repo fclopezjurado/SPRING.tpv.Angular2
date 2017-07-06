@@ -3,7 +3,8 @@
  */
 
 import {Component} from '@angular/core';
-import {MANAGERS_URI, MANAGERS} from '../admin.config'
+import {USERS_URI, MANAGERS} from '../admin.config'
+import {ROLE_MANAGER} from '../../app.config'
 
 @Component({
     templateUrl: './managers.component.html'
@@ -11,9 +12,11 @@ import {MANAGERS_URI, MANAGERS} from '../admin.config'
 export class ManagersComponent {
     endpoint: string;
     usersType: string;
+    role: string;
 
     constructor() {
-        this.endpoint = MANAGERS_URI;
+        this.endpoint = USERS_URI;
         this.usersType = MANAGERS;
+        this.role = ROLE_MANAGER;
     }
 }

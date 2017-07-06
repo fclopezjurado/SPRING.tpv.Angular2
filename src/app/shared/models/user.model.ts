@@ -2,11 +2,12 @@
  * Created by fran lopez on 02/05/2017.
  */
 
-export const MOBILE_ATTRIBUTE_NAME: string = 'mobile';
-export const DNI_ATTRIBUTE_NAME: string = 'dni';
-export const EMAIL_ATTRIBUTE_NAME: string = 'email';
-export const ID_ATTRIBUTE_NAME: string = 'id';
-export const USERNAME_ATTRIBUTE_NAME: string = 'username';
+export const MOBILE_ATTRIBUTE_NAME = 'mobile';
+export const DNI_ATTRIBUTE_NAME = 'dni';
+export const EMAIL_ATTRIBUTE_NAME = 'email';
+export const ID_ATTRIBUTE_NAME = 'id';
+export const USERNAME_ATTRIBUTE_NAME = 'username';
+export const IDENTIFICATION_ATTRIBUTE_NAME = 'identification';
 
 export class User {
     constructor(public mobile?: number, public password?: string, public dni?: string, public email?: string,
