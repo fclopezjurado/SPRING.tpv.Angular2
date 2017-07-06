@@ -6,8 +6,10 @@ import {Component, OnInit} from '@angular/core';
 import {TPVHTTPError} from '../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../shared/services/toast.service';
 import {Ticket} from '../shared/models/ticket.model';
-import {TICKETS, TICKETS_URI} from '../admin.config';
+import {TICKETS, TICKETS_URI, ALL_PATH} from '../admin.config';
 import {HTTPService} from "../../shared/services/http.service";
+import {isArray, isNull, isUndefined} from "util";
+import {Utils} from "../shared/models/utils.service";
 
 @Component({
     templateUrl: './tickets.component.html',
@@ -24,17 +26,30 @@ export class TicketsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.httpService.get(TICKETS_URI).subscribe(
-            results => this.results = results.data,
+        this.httpService.get(TICKETS_URI + ALL_PATH).subscribe(
+            results => this.loadResultsFound(results, true),
             error => this.handleError(error)
         );
     }
 
-    handleError(httpError: TPVHTTPError) {
-        this.toastService.info('ERROR getting results from server', httpError.error);
+    loadResultsFound(results: any, init?: boolean) {
+        if (isArray(results)) {
+            for (let index = 0; index < results.length; index++) {
+                if (!isUndefined(results[index].user) && !isNull(results[index].user)
+                    && !isUndefined(results[index].user.id)) {
+                    results[index].mobile = results[index].user.mobile;
+                }
+
+                if (init) {
+                    results[index].created = Utils.formatDate(results[index].created);
+                }
+            }
+        }
+
+        this.results = results;
     }
 
-    loadResultsFound(results: Ticket[]) {
-        this.results = results;
+    handleError(httpError: TPVHTTPError) {
+        this.toastService.info('ERROR getting results from server', httpError.error);
     }
 }
