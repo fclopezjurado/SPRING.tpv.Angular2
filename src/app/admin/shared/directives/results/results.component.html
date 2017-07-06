@@ -6,7 +6,11 @@
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
-        [limit]="10"
         [selectionType]="'single'"
-        (activate)="onActivate($event)">
+        (activate)="onActivate($event)"
+        [externalPaging]="true"
+        [count]="page.totalElements"
+        [offset]="page.pageNumber"
+        [limit]="page.size"
+        (page)='changePage($event)'>
 </ngx-datatable>
