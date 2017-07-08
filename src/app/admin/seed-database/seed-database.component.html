@@ -1,0 +1,13 @@
+<md-toolbar class="main-header"><span>Seed database</span></md-toolbar>
+<form md-dialog-content class="small-margin-top" [formGroup]="seedDatabaseForm" (ngSubmit)="onSubmit()">
+    <md-input-container class="horizontal-alignment">
+        <input mdInput type="text" name="file" placeholder="File name"
+               formControlName="file" #file required>
+    </md-input-container>
+    <span class="message">Are you sure want to seed database?</span>
+    <div class="buttons-container medium-margin-top">
+        <button md-raised-button type="submit" color="accent" [disabled]="!seedDatabaseForm.valid">Seed database
+            <md-icon class="md-24 margin-left">clear</md-icon>
+        </button>
+    </div>
+</form>
