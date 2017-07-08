@@ -20,7 +20,7 @@
     </md-input-container>
     <md-input-container class="form-element-container">
         <input mdInput type="text" name="state" placeholder="State" [mdAutocomplete]="auto" [formControl]="stateCtrl" forb
-               [(ngModel)]="shopping.state">
+               [(ngModel)]="shopping.shoppingState">
     </md-input-container>
     <md-autocomplete #auto="mdAutocomplete">
         <md-option *ngFor="let state of filteredStates | async" [value]="state">

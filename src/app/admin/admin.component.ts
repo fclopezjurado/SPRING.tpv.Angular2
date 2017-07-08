@@ -9,6 +9,7 @@ import {LocalStorageService} from '../shared/services/local-storage.service';
 import {LOCAL_STORAGE_TOKEN_ATTRIBUTE} from '../app.config';
 import {MdDialog} from '@angular/material';
 import {ClearAppDataDialog} from './clear-app-data/clear-app-data.component';
+import {SeedDatabaseComponent} from "./seed-database/seed-database.component";
 
 @Component({
     templateUrl: './admin.component.html',
@@ -16,7 +17,8 @@ import {ClearAppDataDialog} from './clear-app-data/clear-app-data.component';
 })
 export class AdminComponent {
     constructor(private router: Router, private toastService: ToastService,
-                private localStorageService: LocalStorageService, private clearAppDataDialog: MdDialog) {
+                private localStorageService: LocalStorageService, private clearAppDataDialog: MdDialog,
+                private seedDatabaseDialog: MdDialog) {
     }
 
     logout() {
@@ -27,5 +29,9 @@ export class AdminComponent {
 
     openClearAppDataDialog() {
         this.clearAppDataDialog.open(ClearAppDataDialog);
+    }
+
+    openSeedDatabaseDialog() {
+        this.seedDatabaseDialog.open(SeedDatabaseComponent);
     }
 }

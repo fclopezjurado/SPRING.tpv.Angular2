@@ -11,7 +11,7 @@ import {
     EMAIL_ATTRIBUTE_NAME,
     IDENTIFICATION_ATTRIBUTE_NAME
 } from '../../../../shared/models/user.model';
-import {USER_MOBILE_PATH, DNI_PATH, EMAIL_PATH} from '../../../admin.config';
+import {USER_MOBILE_PATH, DNI_PATH, EMAIL_PATH, USERS_URI} from '../../../admin.config';
 import {ROLE_ATTRIBUTE_NAME} from '../../../../shared/models/session.model';
 import {MdDialog} from '@angular/material';
 import {NewUserDialog} from '../new-user/new-user.component';
@@ -21,7 +21,7 @@ import {Page, SIZE_ATTRIBUTE_NAME, PAGE_ATTRIBUTE_NAME, MEDIUM_PAGE_SIZE} from "
 
 @Component({
     selector: 'users',
-    inputs: ['endpoint', 'usersType', 'role'],
+    inputs: ['usersType', 'role'],
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.css']
 })
@@ -37,6 +37,7 @@ export class UsersComponent implements OnInit {
                 private newUserDialog: MdDialog) {
         this.selected = new User();
         this.page = new Page(MEDIUM_PAGE_SIZE);
+        this.endpoint = USERS_URI;
     }
 
     ngOnInit(): void {
