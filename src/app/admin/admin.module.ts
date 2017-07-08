@@ -9,6 +9,7 @@ import {CustomersModule} from './customers/customers.module';
 import {OperatorsModule} from './operators/operators.module';
 import {ManagersModule} from './managers/managers.module';
 import {ClearAppDataModule} from './clear-app-data/clear-app-data.module';
+import {SeedDatabaseModule} from './seed-database/seed-database.module';
 import {TicketsModule} from './tickets/tickets.module';
 import {AdminComponent} from './admin.component';
 import {ProductsComponent} from './products/products.component';
@@ -40,7 +41,8 @@ import {AdminGuard} from './admin.guard';
         OperatorsModule,
         ManagersModule,
         ClearAppDataModule,
-        TicketsModule
+        TicketsModule,
+        SeedDatabaseModule
     ],
     providers: [
         AdminGuard

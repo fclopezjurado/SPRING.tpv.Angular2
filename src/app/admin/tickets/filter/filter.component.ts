@@ -135,7 +135,6 @@ export class FilterComponent implements OnInit {
     loadResultsByMobile(tickets): any {
         if (!isNull(this.filter.mobile) && (this.filter.mobile > 0)) {
             for (let index = 0; index < tickets.length; index++) {
-                tickets[index].mobile = this.filter.mobile;
                 tickets[index].created = Utils.formatDate(tickets[index].created);
             }
         }
@@ -145,12 +144,7 @@ export class FilterComponent implements OnInit {
 
     loadResultsByReference(ticket): any {
         const tickets = [];
-
-        if (!isUndefined(ticket.userMobile)) {
-            ticket.mobile = ticket.userMobile;
-            ticket.created = Utils.formatDateFromYYYYMMDD(ticket.created);
-        }
-
+        ticket.created = Utils.formatDateFromYYYYMMDD(ticket.created);
         tickets.push(ticket);
         return tickets;
     }

@@ -5,7 +5,6 @@
 export const MOBILE_ATTRIBUTE_NAME = 'mobile';
 export const DNI_ATTRIBUTE_NAME = 'dni';
 export const EMAIL_ATTRIBUTE_NAME = 'email';
-export const ID_ATTRIBUTE_NAME = 'id';
 export const USERNAME_ATTRIBUTE_NAME = 'username';
 export const IDENTIFICATION_ATTRIBUTE_NAME = 'identification';
 
