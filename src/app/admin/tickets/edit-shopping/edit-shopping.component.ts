@@ -40,8 +40,9 @@ export class EditShoppingDialog implements OnInit {
     }
 
     setShoppingStates(shoppingStates: ShoppingState[]) {
-        for (let shoppingState of shoppingStates)
+        for (const shoppingState of shoppingStates) {
             this.shoppingStates.push(shoppingState.state);
+        }
     }
 
     filterStates(state: string) {
@@ -64,9 +65,11 @@ export class EditShoppingDialog implements OnInit {
     }
 
     onSubmit(): void {
-        if (!this.shoppingStates.includes(this.shopping.state))
-            this.toastService.info('ERROR. invalid state for shopping line', this.shopping.state);
-        else
+        if (!this.shoppingStates.includes(this.shopping.shoppingState)) {
+            this.toastService.info('ERROR. invalid state for shopping line', this.shopping.shoppingState);
+        }
+        else {
             this.dialogRef.close(this.shopping);
+        }
     }
 }

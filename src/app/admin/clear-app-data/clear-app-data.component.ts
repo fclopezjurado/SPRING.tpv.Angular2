@@ -11,7 +11,7 @@ import {ToastService} from '../../shared/services/toast.service';
 import {LocalStorageService} from '../../shared/services/local-storage.service';
 import {LOCAL_STORAGE_TOKEN_ATTRIBUTE} from '../../app.config';
 import {HTTPService} from "../../shared/services/http.service";
-import {API_GENERIC_URI} from '../../app.config';
+import {ADMINS_URI, DATABASE_PATH} from '../admin.config';
 
 @Component({
     templateUrl: './clear-app-data.component.html',
@@ -24,7 +24,7 @@ export class ClearAppDataDialog implements OnInit {
     constructor(private dialogRef: MdDialogRef<ClearAppDataDialog>, private formBuilder: FormBuilder,
                 private toastService: ToastService, private httpService: HTTPService,
                 private router: Router, private localStorageService: LocalStorageService) {
-        this.endpoint = API_GENERIC_URI + '/admins';
+        this.endpoint = ADMINS_URI + DATABASE_PATH;
     }
 
     onSubmit(): void {

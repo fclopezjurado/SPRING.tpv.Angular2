@@ -39,10 +39,7 @@ export class ResultsComponent {
 
     onActivate(selection: any) {
         this.onSelect.emit(selection.row);
-
         const dialogRef = this.userDetailsDialog.open(TicketDetailsDialog, {data: {ticket: selection.row}});
-        dialogRef.afterClosed().subscribe(user => {
-            console.log(user);
-        });
+        dialogRef.afterClosed().subscribe();
     }
 }
