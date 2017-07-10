@@ -17,7 +17,7 @@ import { TPVHTTPError } from '../../../../shared/models/tpv-http-error.model';
 
 @Injectable()
 export class SearchService {
-    private static pageSize: number = 80;
+    private static pageSize: number = 400;
     private categoriesRoute: Category[] = [];
     private categoriesPageSubject: Subject<CategoriesPage> = new Subject<CategoriesPage>();
 
