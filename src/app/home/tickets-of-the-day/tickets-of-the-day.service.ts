@@ -17,15 +17,13 @@ export class TicketsOfTheDayService {
 
     private ticketsOfTheDaySubject: Subject<TicketOfTheDay[]> = new Subject<TicketOfTheDay[]>();
     private ticketsOfTheDay: TicketOfTheDay[];
-    private static URI_DAY_TICKETS: string = '/day_tickets';
+    private static URI_DAY_TICKETS: string = '/today';
 
     constructor(private httpService: HTTPService) { }
 
     getTickets(): Promise<any> {
-        let todayDate: Date = new Date();
-        let dateFormatted: string = todayDate.toISOString().slice(0, 10).replace(/-/g, "");
         return new Promise((resolve, reject) => {
-            this.httpService.get(`${URI_TICKETS + TicketsOfTheDayService.URI_DAY_TICKETS}/${dateFormatted}`).subscribe((tickets: TicketOfTheDay[]) => {
+            this.httpService.get(`${URI_TICKETS + TicketsOfTheDayService.URI_DAY_TICKETS}`).subscribe((tickets: TicketOfTheDay[]) => {
                 this.ticketsOfTheDay = tickets;
                 this.ticketsOfTheDaySubject.next(this.ticketsOfTheDay);
                 resolve(tickets);
