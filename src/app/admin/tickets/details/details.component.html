@@ -57,7 +57,7 @@
         (activate)="onActivate($event)">
 </ngx-datatable>
 <div class="buttons-container small-margin-top">
-    <button md-raised-button type="button" color="accent">Invoice
+    <button md-raised-button type="button" color="accent" (click)="printInvoice()">Invoice
         <md-icon class="md-24 margin-left">assignment</md-icon>
     </button>
     <button class="margin-left" md-raised-button type="button" color="accent" (click)="closeForm()">Close
