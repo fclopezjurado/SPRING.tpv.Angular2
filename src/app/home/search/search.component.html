@@ -37,7 +37,7 @@
 		</md-card>
 	</div>
 	<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" fxLayoutAlign="center space-around" class="margin-sides" *ngIf="!loading; else spinner">
-		<div fxFlex="calc(50%)" fxFlex.gt-md="calc(25%)" *ngFor="let category of categories" class="category-container">
+		<div fxFlex="calc(50%)" fxFlex.gt-md="calc(20%)" *ngFor="let category of categories" class="category-container">
 			<md-card [style.background-color]="getCategoryBackgroundColor(category.code)" (click)="openCategory(category)" class="category-card">
 				<div class="image-container">
 					<img md-card-image src="{{category.image}}" onError="this.src='assets/img/image-placeholder.gif';"/>

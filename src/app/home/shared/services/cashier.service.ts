@@ -35,7 +35,7 @@ export class CashierService {
             this.currentCashier = cashier;
             this.currentCashierSubject.next(this.currentCashier);
         }, (error: any) => {
-            if (error.error === 'NotExistsCashierClosuresException') {
+            if (error.error === 'CashierClosingNotFoundException') {
                 this.currentCashier = new CashierClosure();
                 this.currentCashierSubject.next(this.currentCashier);
             } else if (error.status === 401) {

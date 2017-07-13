@@ -3,5 +3,5 @@
   * Github: https://github.com/sergiobanegas 
 */
 export class TicketOfTheDay {
-    constructor(public reference: string, public total: number) { }
+    constructor(public id: number, public reference: string, public total: number) { }
 }

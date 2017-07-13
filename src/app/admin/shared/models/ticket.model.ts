@@ -5,6 +5,7 @@
 import {User} from "../../../shared/models/user.model";
 import {Shopping} from "./shopping.model";
 
+export const ID_ATTRIBUTE_NAME = 'id';
 export const REFERENCE_ATTRIBUTE_NAME = 'reference';
 export const CREATED_DATE_ATTRIBUTE_NAME = 'created';
 

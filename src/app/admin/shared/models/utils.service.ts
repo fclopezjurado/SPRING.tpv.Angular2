@@ -13,6 +13,6 @@ export class Utils {
     }
 
     private static dateToString(date: Date): string {
-        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+        return date.toLocaleString();
     };
 }
