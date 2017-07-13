@@ -24,6 +24,10 @@ import {HTTPService} from "../../../shared/services/http.service";
 import {TICKETS_URI} from '../../admin.config';
 import {TicketUpdate} from "../../shared/models/ticket-update.model";
 import {ShoppingUpdate} from "../../shared/models/shopping-update.model";
+import {PDFService} from "../../../home/purchase/shared/services/pdf.service";
+import {URI_INVOICES} from "../../../app.config";
+import {InvoiceCreation} from "../../../home/purchase/print/shared/models/invoice-creation.model";
+import {Headers} from "@angular/http";
 
 @Component({
     templateUrl: './details.component.html',
@@ -39,7 +43,8 @@ export class TicketDetailsDialog implements OnInit {
 
     constructor(@Inject(MD_DIALOG_DATA) private data: { ticket: Ticket },
                 public dialogRef: MdDialogRef<TicketDetailsDialog>, private httpService: HTTPService,
-                private toastService: ToastService, private editShoppingDialog: MdDialog) {
+                private toastService: ToastService, private editShoppingDialog: MdDialog,
+                private pdfService: PDFService) {
         this.user = new User();
         this.ticket = this.data.ticket;
         this.capitalizePipe = new CapitalizePipe();
@@ -117,4 +122,16 @@ export class TicketDetailsDialog implements OnInit {
     handleError(httpError: TPVHTTPError) {
         this.toastService.info('ERROR getting tickets from server', httpError.error);
     }
+
+    printInvoice(): void {
+        const headers = new Headers();
+        const invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(this.ticket.reference);
+
+        headers.append('Accept', 'application/pdf');
+        this.httpService.post(URI_INVOICES, invoiceCreationWrapper, headers).subscribe(
+            (response: Blob) => this.pdfService.openBlob(response),
+            error => this.handleError(error)
+        );
+    }
+
 }
