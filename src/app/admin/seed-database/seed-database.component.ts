@@ -10,9 +10,7 @@ import {ToastService} from '../../shared/services/toast.service';
 import {HTTPService} from "../../shared/services/http.service";
 import {ADMINS_URI, DATABASE_PATH} from '../admin.config';
 import {RegExpFormValidatorService} from "../../shared/services/reg-exp-form-validator.service";
-import {File, NAME_OF_REQUEST_PARAMETER_FOR_FILE_NAME} from "../shared/models/file.model";
-import {URLSearchParams} from "@angular/http";
-import {Router} from "@angular/router";
+import {File} from "../shared/models/file.model";
 
 @Component({
     templateUrl: './seed-database.component.html',
@@ -40,12 +38,10 @@ export class SeedDatabaseComponent implements OnInit {
     }
 
     onSubmit(): void {
-        const params = new URLSearchParams();
         const formValues = this.seedDatabaseForm.value;
-        this.file.name = formValues.file;
-        params.set(NAME_OF_REQUEST_PARAMETER_FOR_FILE_NAME, this.file.name);
+        this.file.ymlFileName = formValues.file;
 
-        this.httpService.post(this.endpoint, null, null, params).subscribe(
+        this.httpService.post(this.endpoint, this.file.ymlFileName).subscribe(
             result => this.handleOK(),
             error => this.handleError(error)
         );
@@ -65,7 +61,7 @@ export class SeedDatabaseComponent implements OnInit {
 
     buildForm(): void {
         this.seedDatabaseForm = this.formBuilder.group({
-            'file': [this.file.name, [Validators.required, this.formValidatorByRegExp.regExpFormValidator(/\.yml$/)]]
+            'file': [this.file.ymlFileName, [Validators.required, this.formValidatorByRegExp.regExpFormValidator(/\.yml$/)]]
         });
         this.seedDatabaseForm.valueChanges.subscribe(data => this.onValueChanged(data));
         this.onValueChanged();
